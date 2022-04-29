@@ -1,0 +1,54 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.224.3/containers/ubuntu
+{
+	"name": "Ubuntu",
+	//"image": "ros_gezeba:latest",
+	"build": {
+		"dockerfile": "Dockerfile",
+		// Update 'VARIANT' to pick an Ubuntu version: hirsute, focal, bionic
+		// Use hirsute or bionic on local arm64/Apple Silicon.
+		"args": { "VARIANT": "focal" }
+	},
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": {},
+
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [],
+	"runArgs": [
+		"--privileged",
+		"--rm",
+		"-it",
+		"--gpus",
+		"all",
+		"--runtime=nvidia",
+		"--tmpfs",
+		"/tmp",
+		"-v",
+		"/tmp/.X11-unix:/tmp/.X11-unix:rw",
+		"-v",
+		"/dev:/dev",
+		"--device",
+		"/dev/dri:/dev/dri",
+		"-v",
+		"/home/${localEnv:USER}/.gitconfig:/etc/gitconfig",
+		"--network",
+		"host",
+		//"ros_gezeba"
+	],
+	"containerEnv": {
+		"DISPLAY": "${localEnv:DISPLAY}",
+		"VOLUME" : "/tmp/.X11-unix:/tmp/.X11-unix:rw",
+		"QT_X11_NO_MITSHM": "1",
+		
+	}
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a",
+
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode"
+}
